@@ -1,4 +1,4 @@
-package com.app.imagesearch.ui.search
+package com.app.imagesearch.ui.comments
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -12,28 +12,29 @@ import com.app.imagesearch.constants.AppConstants
 import com.app.imagesearch.data.remote.model.ImageSearchResponse
 import com.app.imagesearch.ui.comments.CommentsActivity
 import com.bumptech.glide.RequestManager
+import kotlinx.android.synthetic.main.item_comment.view.*
 import kotlinx.android.synthetic.main.item_image.view.*
 import javax.inject.Inject
 
-class ImagesRecyclerAdapter @Inject constructor() :
+class CommentsRecyclerAdapter @Inject constructor() :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    val oldList by lazy { ArrayList<ImageSearchResponse.Data>() }
+    val oldList by lazy { ArrayList<String>() }
 
     @Inject
     lateinit var glideInstance: RequestManager
 
-    private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ImageSearchResponse.Data>() {
+    private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<String>() {
 
         override fun areItemsTheSame(
-            oldItem: ImageSearchResponse.Data,
-            newItem: ImageSearchResponse.Data
+            oldItem: String,
+            newItem: String
         ): Boolean {
             return oldItem == newItem
         }
 
         override fun areContentsTheSame(
-            oldItem: ImageSearchResponse.Data,
-            newItem: ImageSearchResponse.Data
+            oldItem: String,
+            newItem: String
         ): Boolean {
             return oldItem == newItem
         }
@@ -46,7 +47,7 @@ class ImagesRecyclerAdapter @Inject constructor() :
 
         return BlogPostViewHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.item_image,
+                R.layout.item_comment,
                 parent,
                 false
             )
@@ -65,14 +66,14 @@ class ImagesRecyclerAdapter @Inject constructor() :
         return differ.currentList.size
     }
 
-    fun submitList(list: List<ImageSearchResponse.Data>) {
+    fun submitList(list: List<String>) {
         oldList.clear()
         oldList.addAll(list)
         differ.submitList(list)
     }
 
-    fun addMoreData(moreData: List<ImageSearchResponse.Data>) {
-        oldList.addAll(moreData)
+    fun addMoreData(moreData: String) {
+        oldList.add(moreData)
         differ.submitList(oldList)
     }
 
@@ -81,24 +82,9 @@ class ImagesRecyclerAdapter @Inject constructor() :
         itemView: View
     ) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(item: ImageSearchResponse.Data) = with(itemView) {
+        fun bind(item: String) = with(itemView) {
             itemView.apply {
-                item.images?.let {
-                    glideInstance.load(it[0].link).placeholder(R.drawable.placeholder).into(img)
-                }
-                if (item.images == null) {
-                    llParent.visibility = View.GONE
-                } else {
-                    llParent.visibility = View.VISIBLE
-                }
-
-                setOnClickListener {
-                    context.startActivity(Intent(
-                        context,
-                        CommentsActivity::class.java
-                    ).apply { putExtra(AppConstants.DATA, item) })
-                }
-
+               tvComment.text = item
             }
         }
     }

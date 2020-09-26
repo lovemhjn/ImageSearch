@@ -7,11 +7,11 @@ import androidx.room.PrimaryKey
 data class CommentsEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int?,
-    val imageId: Int,
+    val imageId: String,
     val comment: String
 ) {
     constructor(
-         imageId: Int,
+         imageId: String,
          comment: String
     ):this(null,imageId,comment)
 }

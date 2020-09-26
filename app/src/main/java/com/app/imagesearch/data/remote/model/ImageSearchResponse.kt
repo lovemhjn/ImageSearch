@@ -93,7 +93,7 @@ data class ImageSearchResponse(
         ): Serializable {
             data class Processing(
                 val status: String
-            )
+            ): Serializable
         }
 
         data class Tag(
@@ -113,8 +113,8 @@ data class ImageSearchResponse(
             val thumbnail_hash: Any,
             val thumbnail_is_animated: Boolean,
             val total_items: Int
-        ) {
+        ):Serializable {
             class DescriptionAnnotations(
-            )
+            ):Serializable
         }
     }

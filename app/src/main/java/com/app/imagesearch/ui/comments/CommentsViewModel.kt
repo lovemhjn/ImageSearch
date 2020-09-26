@@ -14,7 +14,7 @@ class CommentsViewModel @ViewModelInject constructor(private val repository: Com
     val commentList:LiveData<List<String>>
     get() = _commentsList
 
-    fun getComments(id:Int){
+    fun getComments(id:String){
         _commentsList.postValue(repository.getComments(id))
     }
 

@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class CommentsRepository @Inject constructor(private val commentsDao: CommentsDao)  {
 
-    fun getComments(id: Int): List<String>{
+    fun getComments(id: String): List<String>{
         return commentsDao.getComments(id)
     }
 

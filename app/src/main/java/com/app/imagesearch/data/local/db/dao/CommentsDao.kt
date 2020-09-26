@@ -11,7 +11,7 @@ interface CommentsDao {
     @Insert
     fun insertComment(comment:CommentsEntity)
 
-    @Query("SELECT comment FROM  CommentsEntity where id=:id")
-    fun getComments(id: Int): List<String>
+    @Query("SELECT comment FROM  CommentsEntity where imageId=:id")
+    fun getComments(id: String): List<String>
 
 }
