@@ -1,6 +1,5 @@
 package com.app.imagesearch.ui.comments
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,12 +7,8 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.app.imagesearch.R
-import com.app.imagesearch.constants.AppConstants
-import com.app.imagesearch.data.remote.model.ImageSearchResponse
-import com.app.imagesearch.ui.comments.CommentsActivity
 import com.bumptech.glide.RequestManager
 import kotlinx.android.synthetic.main.item_comment.view.*
-import kotlinx.android.synthetic.main.item_image.view.*
 import javax.inject.Inject
 
 class CommentsRecyclerAdapter @Inject constructor() :
@@ -45,7 +40,7 @@ class CommentsRecyclerAdapter @Inject constructor() :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
-        return BlogPostViewHolder(
+        return CommentsViewHolder(
             LayoutInflater.from(parent.context).inflate(
                 R.layout.item_comment,
                 parent,
@@ -56,7 +51,7 @@ class CommentsRecyclerAdapter @Inject constructor() :
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is BlogPostViewHolder -> {
+            is CommentsViewHolder -> {
                 holder.bind(differ.currentList[position])
             }
         }
@@ -77,7 +72,7 @@ class CommentsRecyclerAdapter @Inject constructor() :
         differ.submitList(oldList)
     }
 
-    inner class BlogPostViewHolder
+    inner class CommentsViewHolder
     constructor(
         itemView: View
     ) : RecyclerView.ViewHolder(itemView) {

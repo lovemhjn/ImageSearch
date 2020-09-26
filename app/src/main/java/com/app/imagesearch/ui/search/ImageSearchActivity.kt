@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.imagesearch.R
 import com.app.imagesearch.ui.search.state.SearchStateEvent
+import com.app.imagesearch.util.EspressoIdlingResource
 import com.app.imagesearch.util.PaginationScrollListener
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -39,6 +40,7 @@ class ImageSearchActivity : AppCompatActivity() {
         initRecyclerView()
         subscribeObservers()
         addSearchListener()
+        EspressoIdlingResource.increment()
     }
 
     private fun addSearchListener() {
@@ -98,8 +100,10 @@ class ImageSearchActivity : AppCompatActivity() {
             }
 
             override fun loadMoreItems() {
-                if (!isLoading() && !isLastPage())
+                if (!isLoading() && !isLastPage()) {
+                    EspressoIdlingResource.increment()
                     viewModel.setStateEvent(SearchStateEvent.NextPageEvent(etSearch.text.toString()))
+                }
             }
         })
     }
@@ -132,12 +136,16 @@ class ImageSearchActivity : AppCompatActivity() {
                 // set news to RecyclerView
                 adapter.submitList(images.data)
                 println("DEBUG: Setting news to RecyclerView: $images")
+                EspressoIdlingResource.decrement()
+
             }
             viewState.nextPageResponse?.let { images ->
                 hasMoreData = images.data.isNotEmpty()
                 // set news to RecyclerView
                 adapter.addMoreData(images.data)
                 println("DEBUG: Setting news to RecyclerView: $images")
+                EspressoIdlingResource.decrement()
+
             }
         })
     }

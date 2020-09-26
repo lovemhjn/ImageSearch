@@ -44,7 +44,7 @@ class ImagesRecyclerAdapter @Inject constructor() :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
-        return BlogPostViewHolder(
+        return ImagesViewHolder(
             LayoutInflater.from(parent.context).inflate(
                 R.layout.item_image,
                 parent,
@@ -55,7 +55,7 @@ class ImagesRecyclerAdapter @Inject constructor() :
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is BlogPostViewHolder -> {
+            is ImagesViewHolder -> {
                 holder.bind(differ.currentList[position])
             }
         }
@@ -76,7 +76,7 @@ class ImagesRecyclerAdapter @Inject constructor() :
         differ.submitList(oldList)
     }
 
-    inner class BlogPostViewHolder
+    inner class ImagesViewHolder
     constructor(
         itemView: View
     ) : RecyclerView.ViewHolder(itemView) {
